@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Scalatra/AngularJS Invoice Creator #
 A single page WYSIWYG invoice editing app using AngularJS. Uses a simple Scalatra/Akka backed to  asyncronously handle the generation of downloadable PDFs using wkhtmltopdf. This is a toy/learning application, and is not designed with security in mind.
 
@@ -18,7 +17,3 @@ $ ./sbt
 ```
 
 If `browse` doesn't launch your browser, manually open [http://localhost:8080/](http://localhost:8080/) in your browser.
-=======
-scalatra_angular_invoice
-========================
->>>>>>> 0a99d70489f17f64f5800d1ded2440b3cb41912a
