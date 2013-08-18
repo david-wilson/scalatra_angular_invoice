@@ -1,0 +1,66 @@
+body
+  #container.span12
+    h1.span8 Invoice Maker
+    div(ng-controller='InvoiceCtrl')
+      #controls.span4.offset7
+        a(href='#' ng-click='addRow()') Add Row
+        | |
+        a(href='#' ng-click='deleteRow()') Remove Row
+        | |
+        a(href='#' ng-hide='invoice.pdfAvailable' ng-click='pdf()') PDF
+        img(src='/img/ajax-loader.gif' ng-show='pdfProfessing')
+        a(href='{{pdfLink}}' ng-show='invoice.pdfAvailable') Download
+      #invoice-page.span11
+        #header
+          .row.top
+            #company-name.span4(contenteditable='true' ng-model='invoice.company' ng-bind='invoice.company')
+            #title.span2.offset4(contenteditable='true' ng-model='invoice.title' ng-bind='invoice.title')
+          .row
+            #contact.span4
+              #address(contenteditable='true' ng-model='invoice.address' ng-bind='invoice.address')
+              #phone(contenteditable='true' ng-model='invoice.phone' ng-bind='invoice.phone')
+              #email(contenteditable='true' ng-model='invoice.email' ng-bind='invoice.email')
+            #meta.span2.offset4
+              #date(contenteditable='true' ng-model='invoice.date' ng-bind='invoice.date')
+              span#invoice-number-text
+                | Invoice #
+                span#invoice-num(contenteditable='true' ng-model='invoice.number' ng-bind='invoice.number')
+              #custom-name(contenteditable='true' ng-model='invoice.customerName' ng-bind='invoice.customerName')
+              #customer-address(contenteditable='true' ng-model='invoice.customerAddress' ng-bind='invoice.customerAddress')
+          #description(contenteditable='true' ng-model='invoice.description' ng-bind='invoice.description')
+          table#invoice-table
+            thead
+              tr.row
+                th.span1 #
+                th.span3 Item
+                th.span4 Description
+                th.span1 Quantity
+                th.span1 Unit cost
+                th.span1 Total
+            tbody
+              tr.row(ng-repeat='row in invoice.rows')
+                td.span1(contenteditable='true' ng-model='row.count' ng-bind='row.count')
+                td.span3(contenteditable='true' ng-model='row.item' ng-bind='row.item')
+                td.span4(contenteditable='true' ng-model='row.description' ng-bind='row.description')
+                td.span1(contenteditable='true' ng-model='row.quantity' ng-bind='row.quantity')
+                td.span1
+                  | $
+                  span(contenteditable='true' ng-model='row.cost' ng-cloak='ng-cloak') {{row.cost|currency:""}}
+                td.span1(ng-cloak='ng-cloak') {{(row.cost*row.quantity)|currency}}
+            tfoot
+              tr#subtotal.row
+                th.span4(colspan='5') Subtotal
+                th.span1(ng-cloak='ng-cloak') {{getSubTotal()|currency:""}}
+              tr#tax.row
+                th.span4(colspan='5')
+                  | Tax (
+                  span(contenteditable='true' ng-model='invoice.taxPercent' ng-cloak='ng-cloak')  {{invoice.taxPercent}}
+                  | %)
+                th.span1(ng-cloak='ng-cloak') {{(getTax())|currency:""}}
+              tr#total.row
+                th.span4(colspan='5') Total
+                td.span1 {{getTotal()|currency:""}}
+          #note(contenteditable='true' ng-model='invoice.note' ng-bind='invoice.note')
+    script(src='http://code.jquery.com/jquery-1.9.1.min.js')
+    script(src='/js/angular.min.js')
+    script(src='/js/invoice.js')
